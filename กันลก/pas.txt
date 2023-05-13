@@ -1,0 +1,22 @@
+game:GetService("Workspace").Map["WaterBase-Plane"]
+
+game:GetService("Workspace").Boats.MarineBrigade.VehicleSeat
+
+game:GetService("Workspace").Map.MysticIsland:GetChildren()[220]
+game:GetService("Workspace").Map.MysticIsland.npcspawn
+game:GetService("Workspace").Map.MysticIsland.Chests
+game:GetService("Workspace").Map.MysticIsland.Chests:GetChildren()[36]
+game:GetService("Workspace").Map.MysticIsland.Chests:GetChildren()[35]
+game:GetService("Workspace").Boats.MarineBrigade.VehicleSeat.MaxSpeed = 310
+game:GetService("Workspace").Map.MysticIsland:GetChildren()[220]
+game:GetService("Workspace").Map.MysticIsland.npcspawn
+game:GetService("Workspace").Map.MysticIsland.Chests
+game:GetService("Workspace").Map.MysticIsland.Chests:GetChildren()[36]
+game:GetService("Workspace").Map.MysticIsland.Chests:GetChildren()[35]
+game:GetService("Workspace")._WorldOrigin.FruitSpawns
+game:GetService("Workspace").SeaEvents
+game:GetService("ReplicatedStorage").Util.Anims.Storage["2"].ElectroMoon
+game:GetService("Workspace")["Fruit "].Fruit
+game:GetService("Workspace")["Fruit "]["Meshes/spring_Cube.031"]
+game:GetService("Workspace")["Fruit "]
+game:GetService("Workspace")["Revive Fruit"].Fruit

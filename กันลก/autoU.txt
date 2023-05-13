@@ -1,0 +1,125 @@
+
+
+getgenv().AutoSkill = true
+
+function CheckQuest()
+	QuestTable = {};
+	LevelTable = {};
+	local MyLevel = game.Players.LocalPlayer.PlayerStats.lvl.Value;
+	for i,v in pairs(game:GetService("Workspace").AllNPC:GetChildren()) do 
+		if string.find(v.Name,"QuestLvl") then
+			table.insert(QuestTable,v.Name);
+		end;
+	end;
+	for i,v in pairs(game:GetService("ReplicatedStorage").MAP:GetChildren()) do 
+		if string.find(v.Name,"QuestLvl") then
+			table.insert(QuestTable,v.Name);
+		end;
+	end;
+	for i,v in pairs(QuestTable) do
+    	LVL = v:split("QuestLvl")[2];
+		if MyLevel >= tonumber(LVL) then
+			table.insert(LevelTable,LVL);
+		end;
+	end;
+	return math.max(unpack(LevelTable));
+end;
+
+
+
+local mtg = getrawmetatable(game);
+setreadonly(mtg,false);
+local Old = mtg.__newindex;
+mtg.__newindex = newcclosure(function(self,a,b)
+    if self == game.Players.LocalPlayer.Character.HumanoidRootPart and a == "CFrame" and not checkcaller() then
+        return nil ;
+    end;
+    return Old(self,a,b);
+end
+);
+setreadonly(mtg,true);
+
+function WTF(x,y,z)
+	if x and y and z then
+		if not game:GetService("Workspace").AllNPC:FindFirstChild("QuestLvl"..CheckQuest()) then
+			game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = game:GetService("ReplicatedStorage").MAP["QuestLvl"..CheckQuest()].HumanoidRootPart.CFrame * CFrame.new(0,0,-2.5);
+		else 
+			game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = game:GetService("Workspace").AllNPC["QuestLvl"..CheckQuest()].HumanoidRootPart.CFrame * CFrame.new(0,0,-2.5);
+		end;
+		game:GetService'VirtualUser':Button1Down(Vector2.new(1,1));
+		game:GetService'VirtualUser':Button1Up(Vector2.new(1,1));
+		for i,v in pairs(game.Players.LocalPlayer.PlayerGui:GetDescendants()) do
+			if v.Name == "Dialogue" then
+				v.Accept.Size = UDim2.new(0, 10000, 0, 10000);
+				v.Accept.Position = UDim2.new(-2, 0, -5, 0);
+				v.Accept.ImageTransparency = 1;
+				game:GetService("ReplicatedStorage").Remotes.Functions.CheckQuest:InvokeServer();
+			end;
+		end;
+	end;
+end;
+
+function UseSkill(skill)
+	game:GetService("VirtualInputManager"):SendKeyEvent(true,skill,false,game);
+	task.wait();
+	game:GetService("VirtualInputManager"):SendKeyEvent(false,skill,false,game);
+end;
+
+spawn(function()
+	while wait() do
+		if _G.AutoFarm then
+			pcall(function()
+				game.Players.LocalPlayer.Character.Humanoid.Sit = false;
+				if game.Players.LocalPlayer.PlayerGui.Quest.QuestBoard.Visible == false then
+					if not game:GetService("Workspace").AllNPC:FindFirstChild("QuestLvl"..CheckQuest()) then
+						game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = game:GetService("ReplicatedStorage").MAP["QuestLvl"..CheckQuest()].HumanoidRootPart.CFrame * CFrame.new(0,0,0);
+					else 
+						game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = game:GetService("Workspace").AllNPC["QuestLvl"..CheckQuest()].HumanoidRootPart.CFrame * CFrame.new(0,0,0);
+					end;
+					game:GetService'VirtualUser':Button1Down(Vector2.new(1,1));
+					game:GetService'VirtualUser':Button1Up(Vector2.new(1,1));
+					for i,v in pairs(game.Players.LocalPlayer.PlayerGui:GetDescendants()) do
+						if v.Name == "Dialogue" then
+							v.Accept.Size = UDim2.new(0, 10000, 0, 10000);
+							v.Accept.Position = UDim2.new(-2, 0, -5, 0);
+							v.Accept.ImageTransparency = 1;
+							game:GetService("ReplicatedStorage").Remotes.Functions.CheckQuest:InvokeServer();
+						end;
+					end;
+				elseif game.Players.LocalPlayer.PlayerGui.Quest.QuestBoard.Visible == true then
+					Ms = string.sub(game:GetService("Players").LocalPlayer.PlayerGui.Quest.QuestBoard.QuestCount.Text,5,#game:GetService("Players").LocalPlayer.PlayerGui.Quest.QuestBoard.QuestCount.Text);
+					if game:GetService("Workspace").Monster.Mon:FindFirstChild(Ms) or game:GetService("Workspace").Monster.Boss:FindFirstChild(Ms) then
+						for _,v in pairs(game:GetService("Workspace").Monster:GetDescendants()) do
+							if v.Name == Ms and v:FindFirstChild("Humanoid") and v:FindFirstChild("HumanoidRootPart") and v.Humanoid.Health > 0 then
+								repeat wait();
+									if game.Players.LocalPlayer.Character.Haki.Value ~= 1 then
+										game:GetService("Players").LocalPlayer.Character.Services.Client.Armament:FireServer();
+									end;
+									game:GetService'VirtualUser':CaptureController();
+                                    game:GetService'VirtualUser':ClickButton1(Vector2.new(925, 531));
+									game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = v.HumanoidRootPart.CFrame  * CFrame.Angles(math.rad(0), -90, 0) * CFrame.new(0,_G.SelectDis1,0)
+                                    if getgenv().AutoSkill then 
+                                        UseSkill("Z");
+                                        UseSkill("X");
+                                        UseSkill("C");
+                                        UseSkill("V");
+                                    end;
+								until not v.Parent or v.Humanoid.Health <= 0 or not _G.AutoFarm or game:GetService("Players").LocalPlayer.PlayerGui.Quest.QuestBoard.Visible == false;
+							end;
+						end;
+					else
+						if not game:GetService("Workspace").AllNPC:FindFirstChild("QuestLvl"..CheckQuest()) then
+							game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = game:GetService("ReplicatedStorage").MAP["QuestLvl"..CheckQuest()].HumanoidRootPart.CFrame * CFrame.new(0,300,0);
+						else 
+							game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = game:GetService("Workspace").AllNPC["QuestLvl"..CheckQuest()].HumanoidRootPart.CFrame * CFrame.new(0,300,0);
+						end;
+					end;
+				else
+					WTF(true,true,true);
+				end;
+			end
+			);
+		end;
+	end;
+end
+);

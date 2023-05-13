@@ -1,0 +1,66 @@
+
+
+local lib = loadstring(game:HttpGet("https://raw.githubusercontent.com/exploit-script-ui-libs/ui-libs/main/Prim-Ui-lib-main/uilibPrim.lua"))()
+
+local window = lib.init("Ahira#999 Was Here!🐱‍👤", Color3.fromRGB(218, 154, 169), Enum.KeyCode.Insert)
+local general = window.createTab("general", "rbxassetid://8667132506")
+    local aim = general.createSection("aim")
+        local silent = aim.createToggle("silent aim", false, "silentaim", function(bool)
+            sessionSettings["silentaim"] = bool
+        end)
+        local fovcircle = aim.createColorpicker("circle color", Color3.fromRGB(255,0,0), false, "fovcircle", function(clr3, trans)
+            sessionSettings["fovcircle"] = {clr3.r*255, clr3.g*255, clr3.b*255}
+            sessionSettings["fovcircle3"] = trans
+        end)
+        local fovsize = aim.createSlider("circle size", 1, 1, 150, "", "fovamount", function(int)
+            sessionSettings["fovamount"] = int
+        end)
+        local fovsides = aim.createSlider("circle sides", 20, 3, 60, "", "fovsides", function(int)
+            sessionSettings["fovsides"] = int
+        end)
+        local circleoffsetx = aim.createSlider("x offset", 0, 0, 125, "", "circleoffsetx", function(int)
+            sessionSettings["circleoffsetx"] = int
+        end)
+        local circleoffsety = aim.createSlider("y offset", 40, 0, 125, "", "circleoffsety", function(int)
+            sessionSettings["circleoffsety"] = int
+        end)
+local visuals = window.createTab("visuals", "rbxassetid://8595329857")
+    local aim = general.createSection("aim")
+    local world = visuals.createSection("world")
+    local ambiance = world.createColorpicker("ambiance", Color3.fromRGB(0,0,0), false, "ambiance", function(clr3, trans)
+        sessionSettings["ambiance"] = {clr3.r*255, clr3.g*255, clr3.b*255}
+        game.Lighting.Ambient = Color3.fromRGB(unpack({clr3.r*255, clr3.g*255, clr3.b*255}))
+    end)
+    local outsideambiance = world.createColorpicker("outside ambiance", Color3.fromRGB(187,187,187), false, "outsideambiance", function(clr3, trans)
+        sessionSettings["outsideambiance"] = {clr3.r*255, clr3.g*255, clr3.b*255}
+        game.Lighting.OutdoorAmbient = Color3.fromRGB(unpack({clr3.r*255, clr3.g*255, clr3.b*255}))
+    end)
+    local brightness = world.createSlider("brightness", 100, 1, 100, "", "brightness", function(int)
+        sessionSettings["brightness"] = int
+        game.Lighting.Brightness = int/100
+    end)
+    local ui = visuals.createSection("ui")
+        local watermark = ui.createColorpicker("watermark", Color3.fromRGB(255,255,255), true, "watermark", function(clr3, trans, bool)
+            watermarkui.Enabled = bool
+            sessionSettings["watermark"] = {clr3.r*255, clr3.g*255, clr3.b*255}
+            lib.flags["watermark"] = {clr3.r*255, clr3.g*255, clr3.b*255}
+            sessionSettings["watermark2"] = bool
+            if type(lib.flags["watermark"]) == "table" then
+                watermarkLabel.TextColor3 = Color3.fromRGB(unpack(lib.flags["watermark"]))
+            else
+                watermarkLabel.TextColor3 = lib.flags["watermark"]
+            end
+        end)
+        local watermarktext = ui.createDropdown("watermark name", {"Primordial"}, "watermarktext", function(str)
+            sessionSettings["watermarktext"] = str
+            if lib.flags["watermarktext"] ~= "none" then
+                watermarkLabel.Text = lib.flags["watermarktext"].." | "..fps.." fps | "..tostring(math.floor(client.player:GetNetworkPing()*2000)).." ping"
+            else
+                watermarkLabel.Text = fps.." fps | "..tostring(math.floor(client.player:GetNetworkPing()*2000)).." ping"
+            end
+        end)
+        local uiaccent = ui.createColorpicker("ui accent", Color3.fromRGB(218, 154, 169), false, "uiaccent", function(clr3, trans)
+            sessionSettings["uiaccent"] = {clr3.r*255, clr3.g*255, clr3.b*255}
+            watermarkLine.ImageColor3 = Color3.fromRGB(unpack({clr3.r*255, clr3.g*255, clr3.b*255}))
+            lib.setAccent(Color3.fromRGB(unpack({clr3.r*255, clr3.g*255, clr3.b*255})))
+        end)

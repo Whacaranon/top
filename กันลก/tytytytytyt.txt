@@ -1,0 +1,7 @@
+game:GetService("Players").BKLONZ.PlayerGui.Main.RaceEnergy
+game:GetService("Players").BKLONZ.PlayerGui.Main.RaceEnergy.Fill
+game:GetService("Players").BKLONZ.PlayerGui.Main.RaceEnergy.Fill.Trans.AbsoluteSize = -4, 3.00632
+game:GetService("Players").BKLONZ.PlayerGui.Main.RaceEnergy.Fill.Trans.AbsoluteSize = 255.54, 3.00632
+game:GetService("Players").BKLONZ.PlayerGui.Main.RaceEnergy.Fill.Trans
+game:GetService("Players").BKLONZ.PlayerGui.Main.RaceEnergy
+game:GetService("Players").BKLONZ.PlayerGui.Main.RaceEnergy

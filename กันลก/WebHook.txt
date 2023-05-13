@@ -1,0 +1,70 @@
+if game:GetService("Workspace").Map:FindFirstChild("MysticIsland") then
+ local date = os.date("*t")
+ local hour = (date.hour) % 24
+ local ampm = hour < 12 and "AM" or "PM"
+ local timezone = os.date("%X")
+local Moon;
+local Job = game.JobId
+local PlayerCount = #game.Players:GetPlayers()
+if game:GetService("Workspace").Map:FindFirstChild("MysticIsland") then
+    Mirage = "??"
+else
+    Mirage = "??"
+end
+
+
+Infomation = game:GetService("MarketplaceService"):GetProductInfo(game.PlaceId)
+NameGames = Infomation.Name
+_G.wephook = "https://discordapp.com/api/webhooks/1081151317008990249/uoCCbkvYFwvaE1Bg4AY4pxSg5CDTx4DJwKpgMoWAVTUaqyIOPya-cleqaY3NCkrHOVfC"
+        if _G.wephook ~= "" then
+            pcall(function()
+                local url =
+                _G.wephook
+                local data = {
+                  ["content"] = "@",
+                  ["embeds"] = {
+                      {   
+                          ["author"] = {
+                              ["name"] = "Web Hook Mirage"
+                          },
+                          ["type"] = "rich",
+                          ["title"] = "By .....",
+                          ["color"] = tonumber(0x13da),
+                          ["fields"] = {
+                              {
+                                  ["name"] = "Time Status ?",
+                                  ["value"] = "```Time : "..timezone.."```"
+                              },
+                          {
+                                  ["name"] = "Mirage Island ??:",
+                                  ["value"] = "```Mirage : "..Mirage.."```"
+                              },
+                              {
+                                  ["name"] = "Players In Server ????????",
+                                  ["value"] = "```Player : "..PlayerCount.."/12".."```"
+                              },
+                              {
+                                  ["name"] = "Job Id:",
+                                  ["value"] = "```"..Job.."```"
+                              },
+                              {
+                                  ["name"] = "Server JobId:",
+                                  ["value"] = "```".."game.ReplicatedStorage['__ServerBrowser']:InvokeServer('teleport',"..Job..")".."```"
+                              }
+                          }
+                      }
+                  }
+               }
+               local newdata = game:GetService("HttpService"):JSONEncode(data)
+               
+               local headers = {
+                  ["content-type"] = "application/json"
+               }
+               request = http_request or request or HttpPost or syn.request
+               local abcdef = {Url = url, Body = newdata, Method = "POST", Headers = headers}
+               request(abcdef)
+            end)
+            else
+                print("Invaild Url")
+        end
+   end

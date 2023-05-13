@@ -1,0 +1,10 @@
+game:GetService("Workspace").Island["Sea King Thunder"]
+game:GetService("Workspace").SeaMonster.HydraSeaKing
+game:GetService("Workspace").Island["Sea King Thunder"].SeaBeastChest.ChestTop
+game:GetService("Workspace").Island["Sea King Thunder"].SeaBeastChest.RootPart
+
+--ice cre lv 3350 +
+game:GetService("Players").BKLONZ.PlayerGui.Stats.Button.Inventory_Frame.ScrollingFrameMaterial["Ice Crystal"].Amount
+
+dragonChets
+game:GetService("Workspace").Island["Sea King Thunder"].DragonChest

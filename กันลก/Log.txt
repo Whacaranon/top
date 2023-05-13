@@ -1,0 +1,263 @@
+pcall(function() repeat wait() if game:GetService("Players").LocalPlayer.PlayerGui:WaitForChild("Main").ChooseTeam.Visible == true then for i, v in pairs(getconnections(game:GetService("Players").LocalPlayer.PlayerGui.Main.ChooseTeam.Container.Pirates.Frame.ViewportFrame.TextButton.Activated)) do                                                                                                 v.Function() end end until game.Players.LocalPlayer.Team ~= nil and game:IsLoaded() end)
+
+_G.DevelopSetting = {
+    ["LimitLevel"] = 2450,
+}
+print("Step [1/2]")
+
+if _G.PiwwyBf["Sheet language"] == 1 then
+    print("Sheet language = Eng")
+elseif _G.PiwwyBf["Sheet language"] == 2 then
+    print("Sheet language = Thai")
+end
+    
+if _G.PiwwyBf["Sheet Modes"] == 1 then
+     print("Sheet Modes = 1")
+elseif _G.PiwwyBf["Sheet Modes"] == 2 then
+    print("Sheet Modes = 2")
+end
+
+--[Ignore this]
+local Playername = game.Players.LocalPlayer.Name
+local World = 1
+local DeathStep = false
+local SharkMan = false
+local ElectricClaw = false
+local Superhuman = false
+local DragonClaw = false
+local Godhuman = false
+local FruitName = "None"
+local FruitMas = "N/A"
+local Awaked = 0
+local AwakedSkill = ""
+local GetBackpack = game.Players.LocalPlayer.Backpack:GetChildren()
+local AwakedAbilComF = game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("getAwakenedAbilities")
+local GetInven = game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("getInventory")
+local Sword = ""
+local CDK = false
+local HS = false
+local DDG = false
+local YM = false
+local TS = false
+local VK = "VK❌"
+local MR = "MR❌"
+local Des = ""
+local AwakeLimits = 5
+local Melies1 = ""
+local Melies2 = ""
+local Melee_Count = 0
+
+--[Value function]
+function Convert_Int(num)
+    local values = {{1000, "K"}, {1000000, "M"}}
+    local str = ""
+    if type(num) ~= "number" then num = tonumber(num) end
+    for i = 1, #values do
+        if num >= values[i][1] then
+            str = (math.floor(num / values[i][1]))..values[i][2]
+        end
+    end
+    return (num < 1000 and num or str)
+end
+
+function Concat1(word)
+    return table.concat(word," & ") 
+end
+function Concat2(word)
+    return table.concat(word,", ") 
+end
+function Concat3(word)
+    return table.concat(word,"") 
+end
+--[function Check]
+
+function GetSword(Name) 
+    for i,v in pairs(GetInven) do 
+        if v.Type == "Sword" then 
+            if v.Name == Name then 
+                return true 
+            end 
+        end 
+    end 
+end
+function GetGun(Name) 
+    for i,v in pairs(GetInven) do 
+        if v.Type == "Gun" then 
+            if v.Name == Name then 
+                return true 
+            end 
+        end 
+    end 
+end
+function GetMaterial(matname) 
+    for i,v in pairs(GetInven) do 
+        if type(v) == "table" then 
+            if v.Type == "Material" then 
+                if v.Name == matname then
+                    return true 
+                end 
+            end 
+        end 
+    end
+end
+function GetFruit() 
+    local FruitMillion ={}
+    for i,v in pairs(game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("getInventoryFruits")) do
+        if _G.PiwwyBf["Legendary Fruit"] == true then
+            if v.Rarity == 3 or v.Rarity == 4 then  
+                local sub = string.gsub(v.Name, "%-%a+", "")
+                table.insert(FruitMillion,sub)
+            end
+        else
+            local sub = string.gsub(v.Name, "%-%a+", "")
+            table.insert(FruitMillion,sub)
+        end
+    end
+    return FruitMillion
+end
+--[FUNCTION SEND RAM]
+function SetRam(Method,Detail) --SetDescription,SetAlias - Des,Alies
+    syn.request({
+        Method = "POST",
+        Url = "http://localhost:7963/"..Method.."?Account=" ..Playername,
+        Body = Detail,
+    }) 
+end
+
+spawn(function () while true do wait()
+
+--[Check World]
+if game.ReplicatedStorage.Remotes.CommF_:InvokeServer("DressrosaQuestProgress", "Dressrosa") == 0 and game.ReplicatedStorage.Remotes.CommF_:InvokeServer("ZQuestProgress", "Zou") == 0 then 
+    World = "3"  
+elseif game.ReplicatedStorage.Remotes.CommF_:InvokeServer("DressrosaQuestProgress", "Dressrosa") == 0 and not game.ReplicatedStorage.Remotes.CommF_:InvokeServer("ZQuestProgress", "Zou") == 0 then 
+    World = "2"  
+end
+
+--Check Death Step [1]
+local args = {[1] = "BuyDeathStep",[2] = true}
+local DS = game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer(unpack(args))
+if DS == 1 then DeathStep = true end
+wait(.25)
+--Check Sharkman [2]
+local args = {[1] = "BuySharkmanKarate",[2] = true}
+local SharkmanKarate = game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer(unpack(args))
+if SharkmanKarate == 1 then SharkMan = true end
+wait(.25)
+--Check Superhuman [3]
+local args = {[1] = "BuySuperhuman",[2] = true}
+local SH = game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer(unpack(args))
+if SH == 1 then Superhuman = true end
+wait(.25)
+--Check Eletric [4]
+local args = {[1] = "BuyElectricClaw", [2] = true}
+local EC = game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer(unpack(args))
+if EC == 1 then ElectricClaw = true end
+wait(.25)
+--Check Talon [5]
+local args = {[1] = "BuyDragonTalon",[2] = true}
+local DragonTalon = game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer(unpack(args))
+if type(DragonTalon) == "number" then if DragonTalon == 1 then DragonClaw = true end end
+wait(.25)
+--Check Godhuman [6]
+local args = {[1] = "BuyGodhuman",[2] = true}
+local GH = game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer(unpack(args))
+if type(GH) == "number" then if GH == 1 then Godhuman = true end end
+wait(.25)
+
+--[Function Melee]
+
+if Godhuman then Melies1 = Melies1.."Godhuman " Melee_Count = Melee_Count +1 end
+if Superhuman then Melies1 = Melies1.."Superhuman " Melee_Count = Melee_Count +1 end
+if DragonClaw then Melies1 = Melies1.."DragonV2 " Melee_Count = Melee_Count +1 end
+if ElectricClaw then Melies1 = Melies1.."ElectricV2 " Melee_Count = Melee_Count +1 end
+if SharkMan then Melies1 = Melies1.."SharkmanV2 " Melee_Count = Melee_Count +1 end
+if DeathStep then Melies1 = Melies1.."DeathStepV2 " Melee_Count = Melee_Count +1 end
+
+if Godhuman then Melies2 = Melies2.."Godhuman\n" end
+if Superhuman then Melies2 = Melies2.."Superhuman\n" end
+if DragonClaw then Melies2 = Melies2.."DragonV2\n" end
+if ElectricClaw then Melies2 = Melies2.."ElectricV2\n" end
+if SharkMan then Melies2 = Melies2.."SharkmanV2\n" end
+if DeathStep then Melies2 = Melies2.."DeathStepV2\n" end
+
+-- [Fruit Awake check]
+for i,v in pairs(GetBackpack) do 
+    if v:IsA("Tool") then 
+        if v.ToolTip == "Blox Fruit" then 
+            FruitMas = v.Level.Value  
+            FruitName = v.Name 
+        end 
+    end 
+end
+if AwakedAbilComF then 
+    for i, v in pairs(AwakedAbilComF) do 
+        if v["Awakened"] then 
+            Awaked = Awaked + 1 
+            AwakedSkill = AwakedSkill .. i .. " "
+        end 
+    end 
+else 
+    AwakedSkill = "None-Awaken" 
+end
+
+--[Function Get Inventory]
+for i, v in pairs(game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("getInventory")) do
+    if v.Type == "Sword" then
+        for i, vv in pairs(_G.PiwwyBf["Inventory Log Des/Sheet"]) do
+            if string.find(v.Name, vv) then
+                Sword = Sword..v.Name..", "
+            end
+        end
+    end
+end
+
+if GetSword("Cursed Dual Katana") == true then CDK = true end 
+if GetSword("Hallow Scythe") == true then HS = true end
+if GetSword("Dark Dagger") == true then DDG = true end
+if GetSword("Yama") == true then YM = true end
+if GetSword("Tushita") == true then TS = true end
+if GetMaterial("Mirror Fractal") == true then MR = "MR✔️" end
+for i,v in pairs(GetInven) do  if v.Name == "Valkyrie Helm" then  VK = "VK✔️" end end --Valk Helmet
+
+--[Value]
+local Money = Convert_Int(game:GetService("Players").LocalPlayer.Data.Beli.Value)
+local Fragment = Convert_Int(game:GetService("Players").LocalPlayer.Data.Fragments.Value)
+if Fragment == 0 then
+    Fragment = "0"
+end
+local Race = game:GetService("Players").LocalPlayer.Data.Race.Value
+local Level = game:GetService("Players").LocalPlayer.Data.Level.Value
+
+if Level == _G.DevelopSetting["LimitLevel"] then  Level = "MAX" end
+
+if FruitName == "Quake" then 
+    AwakeLimits = 4 
+elseif FruitName == "Dough" then 
+    AwakedLimits = 6 
+end
+
+local CheckinCheck = ""
+if AwakedAbilComF then
+    CheckinCheck = Awaked.."/"..AwakeLimits.." "
+end
+
+if _G.PiwwyBf["Log Mode"] == "Normal" then
+    local RamAccountMain = CheckinCheck if Awaked == 4 and FruitName == "Quake" then Yedhee = "F." elseif Awaked == 5 then Yedhee = "F." elseif Awaked== 6 then Yedhee = "F." end local StatusAlies = "" if Melee_Count == 6 then  StatusAlies = StatusAlies.." | GOD" else  StatusAlies = StatusAlies.." | "..Melee_Count.."/6"  end if DDG then StatusAlies = StatusAlies.." / DDG" end if CDK then StatusAlies = StatusAlies.." / CDK" end if HS then StatusAlies = StatusAlies.." / HS" end local MR_VK_Status = "" if World == 3 then MR_VK_Status = " · "..VK.." | "..MR end
+    Des = RamAccountMain..string.match(FruitName, "%-(.*)").." - ".."W:"..World.." B:"..Money.." F: "..Fragment.."    \n".."-----( Fighting Style )-----\n"..Melies2.."\n-----( Sword )-----\n"..Sword.."\n-----( FruitI nventory )-----\n"..Concat2(GetFruit())
+    Alies = Level..StatusAlies..MR_VK_Status
+elseif _G.PiwwyBf["Log Mode"] == "Normal" then
+
+end
+
+end end)
+print("Step [2/2]")
+
+print("Passed All Step!")
+
+spawn(function()
+    while true do wait(5)
+        SetRam("SetDescription",Des)
+        SetRam("SetAlias",Alies)
+    end
+end)
+
